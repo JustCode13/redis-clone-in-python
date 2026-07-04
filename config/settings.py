@@ -75,3 +75,23 @@ class Settings:
 
         return None
     
+    def validate(self) -> None:
+        if not isinstance(self.host,str):
+            raise ValueError("Host must be a string")
+        
+        if self.host == "":
+            raise ValueError("Host cannot be empty")
+        
+        if self.host not in ("localhost","0.0.0.0","127.0.0.1"):
+            raise ValueError("Invalid Host")
+        
+        if not isinstance(self.port,int):
+            raise ValueError("Port must be a string")
+        
+        if not self.port:
+            raise ValueError("port cannot be empty")
+        
+        if self.port < 0:
+            raise ValueError("Port must be between 1 to 65535")
+        
+        
