@@ -139,6 +139,58 @@ class SerializationHelper:
 
 
 
+    def compare_json_pickle(self, sample: Any) -> dict[str, str]:
+        """
+        Compare JSON and pickle for the given sample object.
+
+        Args:
+            sample: Any Python object that may be serialized.
+
+        Returns:
+            A dictionary describing the tradeoffs between JSON and pickle.
+        """
+
+        json_supported = True
+
+        try:
+            json.dumps(sample)
+        except (TypeError, OverflowError):
+            json_supported = False
+
+        return {
+            "json_supported": (
+                "Yes"
+                if json_supported
+                else "No (object is not directly JSON serializable)"
+            ),
+            "pickle_supported": (
+                "Yes (most Python objects can be pickled)"
+            ),
+            "speed": (
+                "Pickle is generally faster for Python objects."
+            ),
+            "file_size": (
+                "JSON is often larger due to its text format."
+            ),
+            "readability": (
+                "JSON is human-readable; pickle is binary."
+            ),
+            "portability": (
+                "JSON is language-independent; pickle is Python-specific."
+            ),
+            "security": (
+                "JSON is safer for untrusted data. Never unpickle data from untrusted sources."
+            ),
+            "supported_types": (
+                "Pickle supports almost every Python object. "
+                "JSON supports only basic data types such as dict, list, str, int, float, bool, and None."
+            ),
+            "recommended_use": (
+                "Use JSON for APIs, configuration files, and data exchange. "
+                "Use pickle for fast persistence of Python objects."
+            ),
+        }
+    
 
 
 
